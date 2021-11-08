@@ -19,10 +19,14 @@ public class PathSystem : MonoBehaviour {
     public float cellSize = 1.0f;
 
     public Transform startLocation;
+    public GameObject thingToSpawn;
+    public GameObject myCoolObject;
 
     [Space]
     public thumb_up ThumbUp, ThumbDown;
     public int spawnCount = 3;
+
+    public List<GameObject> pegList = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start() {
@@ -44,6 +48,8 @@ public class PathSystem : MonoBehaviour {
         Vector2 currentPosition = startLocation.transform.position;
         gridCellList.Add(new MyGridCell(currentPosition));
 
+        
+
         for (int i = 0; i < pathLength; i++) {
 
             int n = random.Next(100);
@@ -59,31 +65,54 @@ public class PathSystem : MonoBehaviour {
 
         }
     }
-
+    /*
     public Vector2 GetRandomLocation()
     {
         return gridCellList[random.Next(gridCellList.Count)].location;
         
     }
-
+    
     
     public int GetRandomNum()
     {
         return random.Next(1, 2);
     }
+    */
 
     IEnumerator CreatePathRoutine() {
 
         gridCellList.Clear();
+
+        for(int i = 0; i < pegList.Count; i++)
+        {
+            Destroy(pegList[i]);
+        }
+        pegList.Clear();
+
+
+
+
         Vector2 currentPosition = startLocation.transform.position;
         Vector2 currentPosition1 = startLocation.transform.position;
         gridCellList.Add(new MyGridCell(currentPosition));
+
+        //addCollider
+        GameObject go = Instantiate(new GameObject("Block"), currentPosition, Quaternion.identity);
+        BoxCollider2D bcLeft = go.AddComponent<BoxCollider2D>();
+        bcLeft.transform.localPosition = new Vector3(go.transform.position.x - (0.5f * cellSize), bcLeft.transform.position.y);
+        bcLeft.size = new Vector2(0.1f, cellSize);
+
+
+
+        //add prefab
+        Instantiate(thingToSpawn, currentPosition, Quaternion.identity);
+        pegList.Add(thingToSpawn);
 
         for (int i = 0; i < pathLength; i++) {
 
             int n = random.Next(100);
 
-            if (n.IsBetween(0, 49)) {
+            if (n>0 && n < 49) {
                 currentPosition = new Vector2(currentPosition.x + cellSize, currentPosition.y);
             }
             else {
@@ -109,6 +138,21 @@ public class PathSystem : MonoBehaviour {
             }
 
             gridCellList.Add(new MyGridCell(currentPosition1));
+
+            int y = random.Next(100);
+            Debug.Log($"y is equal to {y}");
+            if (y>0 && y < 49)
+            {
+                Instantiate(thingToSpawn, currentPosition, Quaternion.identity);
+                Debug.Log("Spawn!");
+                pegList.Add(go);
+            }
+            else
+            {
+                Debug.Log("Didn't spawn.");
+            }
+            go = Instantiate(new GameObject("Block"), currentPosition, Quaternion.identity);
+
             yield return new WaitForSeconds(0.02f);
         }
     }
@@ -135,7 +179,13 @@ public class PathSystem : MonoBehaviour {
                 CreatePath();
         }
 
-        
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            int x = UnityEngine.Random.Range(0, gridCellList.Count - 1);
+            myCoolObject.transform.position = gridCellList[x].location;
+        }
+
+        /*
         for (int i = 0; i < spawnCount; i++)
         {
             
@@ -149,7 +199,7 @@ public class PathSystem : MonoBehaviour {
                 Instantiate(ThumbDown, GetRandomLocation(), Quaternion.identity);
             }
             
-        }
+        }*/
 
     }
 }

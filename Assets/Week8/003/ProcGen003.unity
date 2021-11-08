@@ -135,7 +135,7 @@ GameObject:
   m_Layer: 0
   m_Name: PathStartLocation
   m_TagString: Untagged
-  m_Icon: {fileID: 8418204508859773708, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -203,9 +203,12 @@ MonoBehaviour:
   pathLength: 8
   cellSize: 1
   startLocation: {fileID: 47078069}
+  thingToSpawn: {fileID: 8799632388634702388, guid: b004336dca2e8c249ae6b88061aec009, type: 3}
+  myCoolObject: {fileID: 6742244021374209953, guid: 0d99601a978bf464681f2e85820e3bff, type: 3}
   ThumbUp: {fileID: -6927890362925177496, guid: b004336dca2e8c249ae6b88061aec009, type: 3}
   ThumbDown: {fileID: -5531651682152251830, guid: f1ffabfa0bdd79d4d8f435867a83d662, type: 3}
   spawnCount: 5
+  pegList: []
 --- !u!1 &1750565798
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,7 +313,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5.1
+  orthographic size: 12.32
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
