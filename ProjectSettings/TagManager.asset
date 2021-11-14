@@ -8,6 +8,9 @@ TagManager:
   - ClickButton
   - GridSystem
   - PathSystem
+  - dog
+  - like
+  - dislike
   layers:
   - Default
   - TransparentFX
